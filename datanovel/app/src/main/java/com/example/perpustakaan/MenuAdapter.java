@@ -1,9 +1,11 @@
 package com.example.perpustakaan;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,9 +37,10 @@ public class MenuAdapter extends RecyclerView.Adapter <MenuAdapter.MenuViewHolde
     @Override
     public void onBindViewHolder(@NonNull MenuViewHolder holder, int position) {
         Menu menubaru = menus.get(position);
-        String gambarbaru = menubaru.getGambar();
-        String harga = menubaru.getHarga();
-        String nama = menubaru.getNama();
+        final String gambarbaru = menubaru.getGambar();
+        final String harga = menubaru.getHarga();
+        final String nama = menubaru.getNama();
+        final String detail = menubaru.getDetail();
 
         holder.tvnamadata.setText(nama);
         holder.tvhargadata.setText(harga);
@@ -46,6 +49,19 @@ public class MenuAdapter extends RecyclerView.Adapter <MenuAdapter.MenuViewHolde
                 .load(gambarbaru)
                 .centerCrop()
                 .into(holder.imdata);
+
+        holder.btnDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent detailIntent = new Intent(context, DetailActivity.class);
+
+                detailIntent.putExtra("img_menu", gambarbaru);
+                detailIntent.putExtra("nama_menu", nama);
+                detailIntent.putExtra("detail_menu", detail);
+
+                context.startActivity(detailIntent);
+            }
+        });
 
     }
 
@@ -59,6 +75,7 @@ public class MenuAdapter extends RecyclerView.Adapter <MenuAdapter.MenuViewHolde
         public ImageView imdata;
         public TextView tvhargadata;
         public TextView tvnamadata;
+        public Button btnDetail;
 
         public MenuViewHolder(@NonNull View itemView) {
 
@@ -67,6 +84,7 @@ public class MenuAdapter extends RecyclerView.Adapter <MenuAdapter.MenuViewHolde
             imdata= itemView.findViewById(R.id.img_menu);
             tvhargadata=itemView.findViewById(R.id.tv_harga);
             tvnamadata=itemView.findViewById(R.id.tv_nama);
+            btnDetail=itemView.findViewById(R.id.btn_detail);
 
 
         }

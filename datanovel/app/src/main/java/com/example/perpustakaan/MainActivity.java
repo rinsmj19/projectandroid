@@ -53,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
                                 String gambarmenu = data.getString("gambar");
                                 String namamenu = data.getString("nama");
                                 String hargamenu = data.getString("harga");
-                                menus.add(new Menu(namamenu, hargamenu, gambarmenu));
+                                String detailMenu = data.getString("keterangan");
+                                menus.add(new Menu(namamenu, hargamenu, gambarmenu, detailMenu));
                             }
 
                             menuAdapter = new MenuAdapter(MainActivity.this, menus);
